@@ -1,0 +1,12 @@
+__pycache__
+cache
+data
+debug
+trash
+wandb
+.ipynb_checkpoints
+test_run
+*.pdb
+*.zip
+*.npy
+workdir
