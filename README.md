@@ -29,8 +29,6 @@ To use our trained models download the `workdir` directory from [this shared Dri
 
 This script saves to `conformers_20steps.pkl` a dictionary with the SMILE as key and the RDKit molecules with generated conformers as value. By default it generates for every row in `smiles.csv` `2*num_confs` conformers, if you are interested in a fixed number of conformers you can specify it with the `--confs_per_mol` parameter.
 
-
-
 ## Training model
 
 Download and extract all the relevant data from the compressed `.tar.gz` folders from [this shared Drive](https://drive.google.com/drive/folders/1BBRpaAvvS2hTrH81mAE4WvyLIKMyhwN7?usp=sharing) putting them in the subdirectory `data`. These contain the GEOM datasets used in the project (license CC0 1.0), the splits from GeoMol and the pickle files with preprocessed molecules (see below to recreate them) and are divided based on the dataset they refer to. Then, you can start training:
@@ -50,7 +48,6 @@ Finally, evaluate the error of the conformers using the following command:
     python evaluate_confs.py --confs workdir/drugs_default/drugs_steps20.pkl --test_csv data/DRUGS/test_smiles.csv --true_mols data/DRUGS/test_mols.pkl --n_workers 10
 
 To relax and predict the ensemble properties, use the `optimize_confs.py` script. Note that this requires to also locally have [xTB](https://xtb-docs.readthedocs.io/en/latest/setup.html) installed and to specify its installation path as an argument.
-
 
 ## Conformer matching
 
