@@ -1,6 +1,6 @@
 # Torsional Diffusion for Molecular Conformer Generation
 
-Implementation of Torsional Diffusion for Molecular Conformer Generation by B Jing,* G Corso,* J Chang, R Barzilay and T Jaakkola.
+Implementation of [Torsional Diffusion for Molecular Conformer Generation](https://arxiv.org/abs/2206.01729) by B Jing,* G Corso,* J Chang, R Barzilay and T Jaakkola.
 
 Torsional diffusion is the state-of-the-art method for molecular conformer generation on the GEOM-DRUGS dataset and the first machine learning method to consistently outperform the established commercial software OMEGA. Torsional diffusion uses a novel diffusion framework that operates on the space of torsion angles via a diffusion process on the hypertorus and an extrinsic-to-intrinsic score model. It also provides exact likelihoods, which are used build the first generalizable Boltzmann generator.
 
@@ -69,6 +69,14 @@ To train the torsional Boltzmann generator reported in the paper at temperature 
 Then to test it:
 
     python test_boltzmann.py --model_dir workdir/boltz_T500 --temp 500 --model_steps 20 --original_model_dir /workdir/drugs_seed_boltz/ --out boltzmann.out
+
+## Citation
+    @article{jing2022torsional,
+          title={Torsional Diffusion for Molecular Conformer Generation}, 
+          author={Bowen Jing and Gabriele Corso and Jeffrey Chang and Regina Barzilay and Tommi Jaakkola},
+          journal={arXiv preprint arXiv:2206.01729},
+          year={2022}
+    }
 
 ## License
 MIT
