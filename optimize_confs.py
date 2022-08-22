@@ -6,6 +6,7 @@ from rdkit.Chem import AllChem
 from utils.xtb import *
 
 parser = ArgumentParser()
+parser.add_argument('--test_csv', type=str, default='./data/DRUGS/test_smiles_corrected.csv', help='Path to csv file with list of smiles and number conformers')
 parser.add_argument('--in_confs', type=str, required=True, help='Pickle with input conformers')
 parser.add_argument('--skip', type=int, default=1, help='Frequency for running procedure')
 parser.add_argument('--out_confs', type=str, required=True, help='Path to output pickle')
@@ -21,7 +22,7 @@ args = parser.parse_args()
     and computes the properties of each conformer
 """
 
-test_data = pd.read_csv('data/DRUGS/test_smiles_corrected.csv').values
+test_data = pd.read_csv(args.test_csv).values
 test_data = test_data[::args.skip]
 print('Optimizing', len(test_data), 'mols')
 
