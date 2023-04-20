@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 
-
 def parse_train_args():
 
     # General arguments

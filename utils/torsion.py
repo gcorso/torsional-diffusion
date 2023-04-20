@@ -5,7 +5,6 @@ from scipy.spatial.transform import Rotation as R
 from torch_geometric.utils import to_networkx
 from torch_geometric.data import Data
 
-
 def get_transformation_mask(pyg_data):
     G = to_networkx(pyg_data, to_undirected=False)
     to_rotate = []

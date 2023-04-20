@@ -1,6 +1,5 @@
 from diffusion.sampling import *
 
-
 class BoltzmannResampler:
     def __init__(self, args, model=None):
         self.model = model

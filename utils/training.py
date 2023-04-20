@@ -3,7 +3,6 @@ from tqdm import tqdm
 import torch
 import diffusion.torus as torus
 
-
 def train_epoch(model, loader, optimizer, device):
     model.train()
     loss_tot = 0

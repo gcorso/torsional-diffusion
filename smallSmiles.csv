@@ -1,0 +1,7 @@
+smiles,n_conformers,corrected_smiles,Path
+N[C@@H](CCC(=O)N[C@@H](CSCc1ccccc1)C(=O)N[C@@H](C(=O)O)c1ccccc1)C(=O)O,10,N[C@@H](CCC(=O)N[C@@H](CSCc1ccccc1)C(=O)N[C@@H](C(=O)O)c1ccccc1)C(=O)O,/thk44/torsional-diffusion/miniRedock/10GS/10GS_LIG.sdf.gz
+NS(=O)(=O)c1ccc(C(=O)NCc2cccc(F)c2F)cc1,10,NS(=O)(=O)c1ccc(C(=O)NCc2cccc(F)c2F)cc1,/thk44/torsional-diffusion/miniRedock/1G52/1G52_LIG.sdf.gz
+CC#C[C@]1(O)CC[C@H]2[C@@H]3CCC4=CC(=O)CCC4=C3[C@@H](c3ccc(N(C)C)cc3)C[C@@]21C,10,CC#C[C@]1(O)CC[C@H]2[C@@H]3CCC4=CC(=O)CCC4=C3[C@@H](c3ccc(N(C)C)cc3)C[C@@]21C,/thk44/torsional-diffusion/miniRedock/1NHZ/1NHZ_LIG.sdf.gz
+NS(=O)(=O)OCCCCCCCCCCOS(N)(=O)=O,10,NS(=O)(=O)OCCCCCCCCCCOS(N)(=O)=O,/thk44/torsional-diffusion/miniRedock/3IBN/3IBN_LIG.sdf.gz
+Cc1[nH]c2ccccc2c1CC(=O)N[C@@H](Cc1ccccc1)C(=O)N(C)c1ccccc1,10,Cc1[nH]c2ccccc2c1CC(=O)N[C@@H](Cc1ccccc1)C(=O)N(C)c1ccccc1,/thk44/torsional-diffusion/miniRedock/4QNB/4QNB_LIG.sdf.gz
+OC(O)(C(F)(F)F)C(F)(F)F,10,OC(O)(C(F)(F)F)C(F)(F)F,/thk44/torsional-diffusion/miniRedock/5YAS/5YAS_LIG.sdf.gz

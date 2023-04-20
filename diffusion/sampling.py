@@ -41,6 +41,7 @@ def get_seed(smi, seed_confs=None, dataset='drugs'):
 
 
 def embed_seeds(mol, data, n_confs, single_conf=False, smi=None, embed_func=None, seed_confs=None, pdb=None, mmff=False):
+    #print("Num conformers wanted: " + str(n_confs))
     if not seed_confs:
         embed_num_confs = n_confs if not single_conf else 1
         try:

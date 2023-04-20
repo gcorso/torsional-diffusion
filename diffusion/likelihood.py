@@ -8,7 +8,6 @@ from utils.xtb import *
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-
 def divergence(model, data, data_gpu, method):
     return {
         'full': divergence_full,
@@ -17,8 +16,17 @@ def divergence(model, data, data_gpu, method):
 
 
 def mmff_energy(mol):
-    energy = AllChem.MMFFGetMoleculeForceField(mol, AllChem.MMFFGetMoleculeProperties(mol, mmffVariant='MMFF94s')).CalcEnergy()
-    return energy
+    #print('Curr Mol: ' + str(mol))
+    exception = False;
+    try:
+        energy = AllChem.MMFFGetMoleculeForceField(mol, AllChem.MMFFGetMoleculeProperties(mol, mmffVariant='MMFF94s')).CalcEnergy()
+    except:
+        exception = True;
+
+    if(exception == True):
+        return None 
+        #energy = AllChem.MMFFGetMoleculeForceField(mol, AllChem.MMFFGetMoleculeProperties(mol, mmffVariant='MMFF94s')).CalcEnergy()
+        #return energy
 
 
 def divergence_full(model, data, data_gpu, eps=0.01):
@@ -92,6 +100,8 @@ def log_det_jac(data):
         dx = dx - np.cross(omega, pos)
         jac.append(dx.flatten())
     jac = np.array(jac)
+    #print(jac)
+    #print(jac.shape)
     _, D, _ = np.linalg.svd(jac)
     return np.sum(np.log(D))
 

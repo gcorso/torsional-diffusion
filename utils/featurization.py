@@ -9,7 +9,6 @@ import torch.nn.functional as F
 from torch_scatter import scatter
 from torch_geometric.data import Dataset, Data, DataLoader
 
-
 dihedral_pattern = Chem.MolFromSmarts('[*]~[*]~[*]~[*]')
 chirality = {ChiralType.CHI_TETRAHEDRAL_CW: -1.,
              ChiralType.CHI_TETRAHEDRAL_CCW: 1.,
@@ -112,18 +111,21 @@ def featurize_mol_from_smiles(smiles, dataset='drugs'):
     if '.' in smiles:
         return None, None
 
-    # filter mols rdkit can't intrinsically handle
+    # filter mols rdkit can't itrinsically handle
     mol = Chem.MolFromSmiles(smiles)
     if mol:
         mol = Chem.AddHs(mol)
     else:
+        print('Failed to generate Molecule')
         return None, None
     N = mol.GetNumAtoms()
 
     # filter out mols model can't make predictions for
     if not mol.HasSubstructMatch(dihedral_pattern):
+        #print('Cannot predict error')
         return None, None
     if N < 4:
+        #print('N < 4 Error')
         return None, None
 
     data = featurize_mol(mol, types)

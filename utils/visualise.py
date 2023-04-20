@@ -8,7 +8,6 @@ import torch
 from rdkit import Geometry
 from rdkit.Chem.rdmolfiles import MolToPDBBlock
 
-
 class PDBFile:
     def __init__(self, mol):
         self.parts = defaultdict(dict)

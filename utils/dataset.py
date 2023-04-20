@@ -14,7 +14,6 @@ from collections import defaultdict
 from utils.featurization import dihedral_pattern, featurize_mol, qm9_types, drugs_types
 from utils.torsion import get_transformation_mask, modify_conformer
 
-
 class TorsionNoiseTransform(BaseTransform):
     def __init__(self, sigma_min=0.01 * np.pi, sigma_max=np.pi, boltzmann_weight=False):
         self.sigma_min = sigma_min

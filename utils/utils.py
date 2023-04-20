@@ -5,7 +5,6 @@ import yaml, time
 from collections import defaultdict
 from diffusion.score_model import TensorProductScoreModel
 
-
 def get_model(args):
     return TensorProductScoreModel(in_node_features=args.in_node_features, in_edge_features=args.in_edge_features,
                                    ns=args.ns, nv=args.nv, sigma_embed_dim=args.sigma_embed_dim,
