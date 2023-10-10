@@ -101,3 +101,24 @@ def perturb_batch(data, torsion_updates, split=False, return_updates=False):
     if return_updates:
         return pos_new, torsion_update_list
     return pos_new
+
+
+def bdot(a, b):
+    return torch.sum(a*b, dim=-1, keepdim=True)
+
+
+def get_torsion_angles(dihedral, batch_pos, batch_size):
+    batch_pos = batch_pos.reshape(batch_size, -1, 3)
+
+    c, a, b, d = dihedral[:, 0], dihedral[:, 1], dihedral[:, 2], dihedral[:, 3]
+    c_project_ab = batch_pos[:,a] + bdot(batch_pos[:,c] - batch_pos[:,a], batch_pos[:,b] - batch_pos[:,a]) / bdot(batch_pos[:,b] - batch_pos[:,a], batch_pos[:,b] - batch_pos[:,a]) * (batch_pos[:,b] - batch_pos[:,a])
+    d_project_ab = batch_pos[:,a] + bdot(batch_pos[:,d] - batch_pos[:,a], batch_pos[:,b] - batch_pos[:,a]) / bdot(batch_pos[:,b] - batch_pos[:,a], batch_pos[:,b] - batch_pos[:,a]) * (batch_pos[:,b] - batch_pos[:,a])
+    dshifted = batch_pos[:,d] - d_project_ab + c_project_ab
+    cos = bdot(dshifted - c_project_ab, batch_pos[:,c] - c_project_ab) / (
+                torch.norm(dshifted - c_project_ab, dim=-1, keepdim=True) * torch.norm(batch_pos[:,c] - c_project_ab, dim=-1,
+                                                                                       keepdim=True))
+    cos = torch.clamp(cos, -1 + 1e-5, 1 - 1e-5)
+    angle = torch.acos(cos)
+    sign = torch.sign(bdot(torch.cross(dshifted - c_project_ab, batch_pos[:,c] - c_project_ab), batch_pos[:,b] - batch_pos[:,a]))
+    torsion_angles = (angle * sign).squeeze(-1)
+    return torsion_angles

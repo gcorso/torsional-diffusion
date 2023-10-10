@@ -67,12 +67,43 @@ Then to test it:
 
     python test_boltzmann.py --model_dir workdir/boltz_T500 --temp 500 --model_steps 20 --original_model_dir /workdir/drugs_seed_boltz/ --out boltzmann.out
 
+
+## Particle Guidance sampling
+
+In [this manuscript]() we propose a new sampling method for jointly sampling a set of particles using diffusion models that we call particle guidance. We demonstrate that for the task of molecular conformer generation this provides significant improvements in precision and recall compared to standard I.I.D. diffusion sampling. To run the particle guidance sampling with torsional diffusion to replicate the results of the paper (similarly you can run on your own molecules)
+
+For the permutation invariant kernel guidance (higher quality, slower):
+
+    # minimizing recall error
+    python generate_confs.py --tqdm --batch_size 128 --no_energy --inference_steps=20 --model_dir=workdir/drugs_default --test_csv=data/DRUGS/test_smiles.csv --pg_invariant=True --pg_kernel_size_log_0=1.7565691770646286 --pg_kernel_size_log_1=1.1960868735428605 --pg_langevin_weight_log_0=-2.2245183818892103 --pg_langevin_weight_log_1=-2.403905082248579 --pg_repulsive_weight_log_0=-2.158537381110402 --pg_repulsive_weight_log_1=-2.717482077162461 --pg_weight_log_0=0.8004013644746992 --pg_weight_log_1=-0.9255658381081596
+    # minimizing precision error
+    python generate_confs.py --tqdm --batch_size 128 --no_energy --inference_steps=20 --model_dir=workdir/drugs_default --test_csv=data/DRUGS/test_smiles.csv --pg_invariant=True --pg_kernel_size_log_0=-0.9686202580381296 --pg_kernel_size_log_1=-0.7808409291022302 --pg_langevin_weight_log_0=-2.434216242826782 --pg_langevin_weight_log_1=-0.2602238633333869 --pg_repulsive_weight_log_0=-2.0439285313973237 --pg_repulsive_weight_log_1=-1.468234554877924 --pg_weight_log_0=0.3495680598729498 --pg_weight_log_1=-0.22001939454654185
+
+
+For the non-permutation invariant kernel guidance (faster, slightly lower quality, but still better than I.I.D.):
+
+    # minimizing recall error
+    python generate_confs.py --tqdm --batch_size 128 --no_energy --inference_steps=20 --model_dir=workdir/drugs_default --test_csv=data/DRUGS/test_smiles.csv --pg_kernel_size_log_0=2.35958 --pg_kernel_size_log_1=-0.78826 --pg_langevin_weight_log_0=-1.55054 --pg_langevin_weight_log_1=-2.70316 --pg_repulsive_weight_log_0=1.01317 --pg_repulsive_weight_log_1=-2.68407 --pg_weight_log_0=0.60504 --pg_weight_log_1=-1.15020
+    # minimizing precision error
+    python generate_confs.py --tqdm --batch_size 128 --no_energy --inference_steps=20 --model_dir=workdir/drugs_default --test_csv=data/DRUGS/test_smiles.csv --pg_kernel_size_log_0=1.29503 --pg_kernel_size_log_1=1.45944 --pg_langevin_weight_log_0=-2.88867 --pg_langevin_weight_log_1=-2.47591 --pg_repulsive_weight_log_0=-1.01222 --pg_repulsive_weight_log_1=-1.91253 --pg_weight_log_0=-0.16253 --pg_weight_log_1=0.79355
+
 ## Citation
+
+If you use this code, please cite:
+
     @article{jing2022torsional,
           title={Torsional Diffusion for Molecular Conformer Generation}, 
           author={Bowen Jing and Gabriele Corso and Jeffrey Chang and Regina Barzilay and Tommi Jaakkola},
           journal={arXiv preprint arXiv:2206.01729},
           year={2022}
+    }
+
+If you also employ the particle guidance sampling technique, please also cite:
+
+    @article{corso2023particle,
+          title={Particle Guidance: non-I.I.D. Diverse Sampling with Diffusion Models}, 
+          author={Gabriele Corso and Yilun Xu and Valentin de Bortoli and Regina Barzilay and Tommi Jaakkola},
+          year={2023}
     }
 
 ## License

@@ -34,6 +34,16 @@ parser.add_argument('--water', action='store_true', default=False, help='Whether
 parser.add_argument('--batch_size', type=int, default=32, help='Number of conformers generated in parallel')
 parser.add_argument('--xtb', type=str, default=None, help='If set, it indicates path to local xtb main directory')
 parser.add_argument('--no_energy', action='store_true', default=False, help='If set skips computation of likelihood, energy etc')
+
+parser.add_argument('--pg_weight_log_0', type=float, default=None)
+parser.add_argument('--pg_weight_log_1', type=float, default=None)
+parser.add_argument('--pg_repulsive_weight_log_0', type=float, default=None)
+parser.add_argument('--pg_repulsive_weight_log_1', type=float, default=None)
+parser.add_argument('--pg_langevin_weight_log_0', type=float, default=None)
+parser.add_argument('--pg_langevin_weight_log_1', type=float, default=None)
+parser.add_argument('--pg_kernel_size_log_0', type=float, default=None)
+parser.add_argument('--pg_kernel_size_log_1', type=float, default=None)
+parser.add_argument('--pg_invariant', type=bool, default=False)
 args = parser.parse_args()
 
 """
@@ -113,7 +123,15 @@ def sample_confs(raw_smi, n_confs, smi):
 
     if not args.no_model and n_rotable_bonds > 0.5:
         conformers = sample(conformers, model, args.sigma_max, args.sigma_min, args.inference_steps,
-                            args.batch_size, args.ode, args.likelihood, pdb)
+                            args.batch_size, args.ode, args.likelihood, pdb,
+                            pg_weight_log_0=args.pg_weight_log_0, pg_weight_log_1=args.pg_weight_log_1,
+                            pg_repulsive_weight_log_0=args.pg_repulsive_weight_log_0,
+                            pg_repulsive_weight_log_1=args.pg_repulsive_weight_log_1,
+                            pg_kernel_size_log_0=args.pg_kernel_size_log_0,
+                            pg_kernel_size_log_1=args.pg_kernel_size_log_1,
+                            pg_langevin_weight_log_0=args.pg_langevin_weight_log_0,
+                            pg_langevin_weight_log_1=args.pg_langevin_weight_log_1,
+                            pg_invariant=args.pg_invariant, mol=mol)
 
     if args.dump_pymol:
         if not osp.isdir(args.dump_pymol):
