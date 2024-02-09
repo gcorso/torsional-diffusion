@@ -92,8 +92,12 @@ def log_det_jac(data):
         dx = dx - np.cross(omega, pos)
         jac.append(dx.flatten())
     jac = np.array(jac)
-    _, D, _ = np.linalg.svd(jac)
-    return np.sum(np.log(D))
+    try:
+        _, D, _ = np.linalg.svd(jac)
+        return np.sum(np.log(D))
+    except:
+        ## in case there are 0 rotatable bonds, return 0
+        return 0
 
 
 kT = 0.592
